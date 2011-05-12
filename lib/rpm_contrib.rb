@@ -18,7 +18,10 @@ module RPMContrib
 end
 # Perform any framework/dispatcher detection before loading the rpm gem.
 require 'rpm_contrib/detection'
-raise "The rpm_contrib gem must be loaded before the newrelic_rpm gem." unless require 'newrelic_rpm'
+
+first_time = require 'newrelic_rpm'
+## Unfortunately it's broken for me with RubyGems 1.8.2 and Bundler 1.0.13 - require always returns nil
+# raise "The rpm_contrib gem must be loaded before the newrelic_rpm gem." unless first_time
 
 if defined? Rails
   # Rails 3.x+
